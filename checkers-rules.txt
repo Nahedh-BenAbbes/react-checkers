@@ -1,0 +1,43 @@
+General Rules
+
+- 8x8 checkered board
+- 2 players
+- 12 pieces per player
+   - each piece places on dark squares on first two rows
+- Pieces can only move diagonally
+   - if there is an opponent's piece on one side and empty space after, you can jump and take their piece
+      - if you have a jump, you have no choice but to take it
+      - you can jump multiple pieces if they line up
+- If a piece makes it to the opponent's last row, it is kinged
+   - king pieces can move forward and backward but must wait until next turn to exit king row
+- Player wins when opponent has no more pieces or can't move
+   - for now, just leaving it at no more pieces to make logic easier
+
+
+HTML
+- Checker board
+   - 16 divs of alternating styles (black/white)
+      - each with an id of their row/column for tracking
+- Pieces
+   - each will most likely be image || use css to style another div into a circle
+   - each will have an id that tracks individual piece
+   - each will have click handler that selects the piece
+
+
+JS
+- Player class
+   - use redux for state management
+   - state
+      - numPieces - number of pieces left
+      - winner - defaults to false, set true when one wins
+- Piece class
+   - same as above with redux
+   - state
+      - active - default to true
+      - isKing - default to false
+      - row - row the piece is currently on
+      - column - column the piece is currently on
+   - functions
+      - remove() - removes the piece from the board when overtaken
+      - king() - sets up a piece as a king if they make it
+         - also update the piece with some sort of indicator that it is king
