@@ -16,7 +16,7 @@ General Rules
 
 HTML
 - Checker board
-   - 16 divs of alternating styles (black/white)
+   - 64 divs of alternating styles (black/white)
       - each with an id of their row/column for tracking
 - Pieces
    - each will most likely be image || use css to style another div into a circle
@@ -30,14 +30,69 @@ JS
    - state
       - numPieces - number of pieces left
       - winner - defaults to false, set true when one wins
+   - functions 
+      - removePiece()
+	     - returns this.numPieces - 1
+      - setWinner()
+	     - if (otherPlayer.numPieces = 0)
+		     return winner = true
+
+
+	
 - Piece class
-   - same as above with redux
+   - using redux to manage each instance
    - state
       - active - default to true
       - isKing - default to false
+	  - color - set based on what side of the board it is on
       - row - row the piece is currently on
       - column - column the piece is currently on
    - functions
       - remove() - removes the piece from the board when overtaken
+	     - 
       - king() - sets up a piece as a king if they make it
          - also update the piece with some sort of indicator that it is king
+	  - setAllowedMove()
+	     - take this.row, this.column, and this.color 
+		 - separate if conditions based on color 
+		    - nested if condition to see if a piece is already on a spot in front of them
+			   - depending on the type of piece, if opposite color, see if another piece is in the spot beyond that for jumping
+		 - return array of available spaces to move 
+	  - move(rowColumn)
+	     - take in rowColumn
+		    - render the piece in the new div 
+            - remove piece from old div 
+               - not sure how to do this yet
+
+- Board class 
+   - don't need to manage with redux 
+   - functions 
+      - render()
+         - something along the lines of:
+		 <Row id=1 />
+		 <Row id=2 />
+		 <Row id=3 />
+		 ...etc
+
+- Row class 
+   - use redux to manage state 
+   - use css file to style each square in the row 
+   - state 
+      - rowNum - set with custom constructor
+   - functions 
+      - render()
+         - render a row with 8 columns
+		    - create variable to track this.rowNum + column 
+			   - if (this.rowNum == 1 || this.rowNum === 2 || this.rowNum === 7 || this.rowNum === 8)
+			      - if (this.rowNum % 2 === 0)
+				     - create row div with instantiated Piece class on correct columns
+				  - else 
+				     - create row div with instantiated Piece class on correct columns 
+               - else
+			      - if (this.rowNum % 2 === 0)
+				     - create row div
+				  - else 
+				     - create row div
+                  - give className from css for the other starting color 			   
+		          - give each column div an id = {this.id + colIndex} 
+

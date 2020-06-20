@@ -15,5 +15,6 @@ class Board extends Component {
                 boardArr.push(<div id={rowCol} className="col"></div>)
             }
         }
+        return boardArr;
     }
 }
