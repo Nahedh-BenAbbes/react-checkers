@@ -65,7 +65,14 @@ JS
                - not sure how to do this yet
 
 - Board class 
-   - don't need to manage with redux 
+   - manage state with redux 
+      - state would be an array of objects
+	  initialState = { 
+	     board: [{ id: 1, row: 1, col: 1, hasPiece: true }],
+		 pieces: [{ id: 1, player: 1, currentRow: 1, currentColumn: 1 }]
+		}
+	  - this might negate the need for a Row component
+	  - possibly create 
    - functions 
       - render()
          - something along the lines of:
@@ -107,3 +114,47 @@ CSS / Syling
 React
 - key value for props, React uses to uniquely identify individual instances of classes
    - this will be good when trying to clean up rendering rows 
+- payload in dispatch
+   - this is how you can pass parameters in dispatch functions 
+   
+   
+Example code snippets of possible board state:
+
+
+
+	if (action.type === 'MAKE_KING') {
+		const { x, y } = action.payload;
+		const pieceIndex = state.pieces.findIndex(
+			(piece) => x === piece.position.x && y === piece.position.y
+		);
+		const newPiecesArray = state.pieces.map((piece, i) => {
+			if (i === pieceIndex) {
+				piece = { ...piece, isKing: true, letter: 'T' };
+			}
+			return piece;
+		});
+		return {
+			...state,
+			pieces: newPiecesArray,
+		};
+	}
+	
+	{this.props.board.map((row, x) => {
+					return (
+						<div key={x} style={{ display: 'flex' }}>
+							{row.map((col, y) => {
+								const column = this.props.pieces.find(
+									(piece) => x === piece.position.x && y === piece.position.y
+								);
+								return (
+									<button
+										key={y}
+										style={{ width: '50px', height: '50px' }}
+										onClick={() => this.handleClick(x, y)}>
+										{column.letter}
+									</button>
+								);
+							})}
+						</div>
+					);
+				})}
