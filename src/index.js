@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Board from './components/Board';
+import { createStore } from 'redux';
 import * as serviceWorker from './serviceWorker';
+
+const initialState = {
+  board: [],
+  pieces: []
+}
+
+const reducer = (state = initialState, action) {
+  
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Board />
   </React.StrictMode>,
   document.getElementById('board')
 );

@@ -2,9 +2,18 @@
 
 import React, { Component } from 'react';
 import '../css/Piece.css';
-import { connect } from 'react-redux';
 
 class Piece extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            active: true,
+            isKing: false,
+            color: state.color,
+            currentRow: state.currentRow,
+            currentColumn: state.currentColumn
+        }
+    }
 
     // Remove game piece when overtaken
     removePiece = () => {
@@ -28,28 +37,4 @@ class Piece extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        active: true,
-        isKing: false,
-        color,
-        currentRow,
-        currentColumn
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        removePiece: function() {
-            dispatch({ type: 'REMOVEPIECE' });
-        },
-        king: function() {
-            dispatch({ type: 'KING' });
-        },
-        getAvailableMove: function() {
-            dispatch({ type: 'GETAVAILABLEMOVE' })
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Piece);
+export default Piece;
