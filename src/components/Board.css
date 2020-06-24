@@ -8,9 +8,15 @@
     height: 100px;
 }
 .Even .col {
-    border: 5px solid black;
+    padding: 0px;
+    border: 1px solid black;
+}
+
+.Even.col:nth-child(even) {
+    background: tan;
 }
 
 .Odd .col {
-    border: 5px solid black;
+    padding: 0px;
+    border: 1px solid black;
 }

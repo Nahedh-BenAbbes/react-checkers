@@ -21,7 +21,7 @@ class Board extends Component {
                 <div key={x + 1} className={evenOdd}>
                     {row.map((col, y) => {
                         return (
-                            <div key={x} className="col"></div>
+                            <div key={y} className="col"></div>
                         )
                     })}
                 </div>

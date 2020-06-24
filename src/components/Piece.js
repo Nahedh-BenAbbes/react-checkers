@@ -9,30 +9,42 @@ class Piece extends Component {
         this.state = {
             active: true,
             isKing: false,
-            color: state.color,
-            currentRow: state.currentRow,
-            currentColumn: state.currentColumn
+            color: '',
+            currentRow: null,
+            currentColumn: null
         }
+    }
+
+    // When instantiated, update state with color and current starting location
+    componentDidMount = () => {
+        return this.setState({
+            ...this.state,
+            color: this.props.color,
+            currentRow: this.props.currentRow,
+            currentColumn: this.props.currentColumn
+        })
     }
 
     // Remove game piece when overtaken
     removePiece = () => {
-        return this.props.removePiece()
+        return
     }
 
     // Mark piece as king
     king = () => {
-        return this.props.king()
+        return this.setState({ ...this.state, isKing: true });
     }
 
     // Get available spaces to move based on color/current row and column
     getAvailableMove = () => {
-        return this.props.getAvailableMove()
+        return
     }
 
     render = () => {
+
+        let pieceColor = `player-${this.state.color}`
         return (
-            <div className="rounded-circle"></div>
+            <span className={pieceColor}></span>
         )
     }
 }

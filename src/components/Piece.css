@@ -1,0 +1,15 @@
+.player-red {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.player-black {
+    height: 50px;
+    width: 50px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;   
+}
