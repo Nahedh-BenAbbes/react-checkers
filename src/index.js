@@ -2,23 +2,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './components/Board';
-import { createStore } from 'redux';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 const initialState = {
-  board: [],
+  board: [
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '']
+  ],
   pieces: []
 }
 
-const reducer = (state = initialState, action) {
-  
+
+const reducer = (state = initialState, action) => {
+  return state;
 }
+
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Board />
+    <Provider store={store}>
+      <Board />
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('board')
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

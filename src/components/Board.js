@@ -1,27 +1,41 @@
 // Board class that renders 8 instances of the Row class
 
 import React, { Component } from 'react';
-import '../css/Board.css'
+import './Board.css'
 import { connect } from 'react-redux';
-import Row from './Row'
+
 
 class Board extends Component {
 
     render = () => {
 
-        let rowsJSX = new Array(8).fill(null).map(index => {
-            return <Row rowNum={index} />
-        })
+        let newBoard = this.props.state.board.map((row, x) => {
+            let evenOdd = '';
+            if ((x + 1) % 2 === 0) {
+                evenOdd = 'row Even'
+            } else {
+                evenOdd = 'row Odd'
+            }
 
+            return (
+                <div key={x + 1} className={evenOdd}>
+                    {row.map((col, y) => {
+                        return (
+                            <div key={x} className="col"></div>
+                        )
+                    })}
+                </div>
+            )
+        })
         return (
-            <div className="Board">{rowsJSX}</div>
+            <div className="Board container">{newBoard}</div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        state: state
+        state: {...state}
     }
 }
 
