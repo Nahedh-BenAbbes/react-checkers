@@ -1,7 +1,7 @@
 // Piece class to manage the state of each piece on the Board
 
 import React, { Component } from 'react';
-import '../css/Piece.css';
+import './Piece.css';
 
 class Piece extends Component {
     constructor(props) {
@@ -19,6 +19,7 @@ class Piece extends Component {
     componentDidMount = () => {
         return this.setState({
             ...this.state,
+            id: this.props.id,
             color: this.props.color,
             currentRow: this.props.currentRow,
             currentColumn: this.props.currentColumn

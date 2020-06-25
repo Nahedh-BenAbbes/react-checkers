@@ -1,7 +1,8 @@
 // Board class that renders 8 instances of the Row class
 
 import React, { Component } from 'react';
-import './Board.css'
+import './Board.css';
+import Piece from './Piece';
 import { connect } from 'react-redux';
 
 
@@ -20,6 +21,7 @@ class Board extends Component {
             return (
                 <div key={x + 1} className={evenOdd}>
                     {row.map((col, y) => {
+                        // Set up conditional statements for mounting the Piece component
                         return (
                             <div key={y} className="col"></div>
                         )

@@ -117,7 +117,17 @@ React
 - payload in dispatch
    - this is how you can pass parameters in dispatch functions 
    
-   
+Piece placement
+[1,2],[1,4],[1,6],[1,8]
+[2,1],[2,3],[2,5],[2,7]
+[3,2],[3,4],[3,6],[3,8]
+- Use if/else if statements
+
+- pieces array, what each object will look like 
+pieces = [
+	{id: 1, currentRow: 1, currentColumn: 2, color: white}
+]
+
 Example code snippets of possible board state:
 
 
@@ -158,3 +168,4 @@ Example code snippets of possible board state:
 						</div>
 					);
 				})}
+				
