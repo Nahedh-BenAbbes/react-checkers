@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import './Piece.css';
+// import Draggable from 'react-draggable';
 
 class Piece extends Component {
     constructor(props) {
@@ -18,11 +19,12 @@ class Piece extends Component {
     // When instantiated, update state with color and current starting location
     componentDidMount = () => {
         return this.setState({
-            ...this.state,
             id: this.props.id,
             color: this.props.color,
             currentRow: this.props.currentRow,
-            currentColumn: this.props.currentColumn
+            currentColumn: this.props.currentColumn,
+            active: this.props.active,
+            isKing: this.props.isKing
         })
     }
 
@@ -42,10 +44,13 @@ class Piece extends Component {
     }
 
     render = () => {
-
         let pieceColor = `player-${this.state.color}`
+        let pieceImg = this.state.active ? <span className={pieceColor}></span> : ''
         return (
-            <span className={pieceColor}></span>
+            <div>
+                {pieceImg}
+            </div>
+            
         )
     }
 }

@@ -8,6 +8,22 @@ import { connect } from 'react-redux';
 
 class Board extends Component {
 
+    movePiece = () => {
+        this.props.movePiece()
+    }
+
+    removePiece = () => {
+        this.props.removePiece()
+    }
+
+    king = () => {
+        this.props.king()
+    }
+
+    getAvailableMove = () => {
+        this.props.getAvailableMove()
+    }
+
     render = () => {
 
         let newBoard = this.props.state.board.map((row, x) => {
@@ -26,7 +42,15 @@ class Board extends Component {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
                                     <div key={y} className="col">
-                                        <Piece id={this.props.state.pieces[i].id} color={this.props.state.pieces[i].color} currentRow={this.props.state.pieces[i].currentRow} currentColumn={this.props.state.pieces[i].currentColumn} />
+                                        <Piece 
+                                            id={this.props.state.pieces[i].id} 
+                                            color={this.props.state.pieces[i].color} 
+                                            currentRow={this.props.state.pieces[i].currentRow} 
+                                            currentColumn={this.props.state.pieces[i].currentColumn}
+                                            active={this.props.state.pieces[i].active}
+                                            isKing={this.props.state.pieces[i].isKing}
+                                            // onClick={this.props.} 
+                                        />
                                     </div>
                                 )
                             }                          
@@ -52,13 +76,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removePiece: function() {
+        movePiece: () => {
+            dispatch({ type: 'MOVEPIECE' });
+        },
+        removePiece: () => {
             dispatch({ type: 'REMOVEPIECE' });
         },
-        king: function() {
+        king: () => {
             dispatch({ type: 'KING' });
         },
-        getAvailableMove: function() {
+        getAvailableMove: () => {
             dispatch({ type: 'GETAVAILABLEMOVE' })
         }
     }
