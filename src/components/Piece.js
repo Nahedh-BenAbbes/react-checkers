@@ -33,15 +33,29 @@ class Piece extends Component {
         return
     }
 
-    // Mark piece as king
-    king = () => {
-        return this.setState({ ...this.state, isKing: true });
-    }
-
     // Get available spaces to move based on color/current row and column
     getAvailableMove = (event) => {
-        console.log(event.target.dataset.id);
-        console.log(`Current column: ${event.target.dataset.column}\nCurrent row: ${event.target.dataset.row}`);
+        const currentColumn = event.target.dataset.column;
+        const currentRow = event.target.dataset.row;
+
+        if (this.state.color === 'red') {
+            const firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
+            const secondMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
+
+            document.getElementById(firstMove).style.backgroundColor = "green";
+            document.getElementById(firstMove).style.opacity = "0.5";
+            document.getElementById(secondMove).style.backgroundColor = "green";
+            document.getElementById(secondMove).style.opacity = "0.5";
+            
+        } else if (this.state.color === 'black') {
+            const firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
+            const secondMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
+
+            document.getElementById(firstMove).style.backgroundColor = "green";
+            document.getElementById(firstMove).style.opacity = "0.5";
+            document.getElementById(secondMove).style.backgroundColor = "green";
+            document.getElementById(secondMove).style.opacity = "0.5";
+        }
 
     }
 
