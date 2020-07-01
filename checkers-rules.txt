@@ -128,7 +128,15 @@ React
    - when removing a Piece:
       - set the Piece at state.pieces.id to active: false 
 	  - have a conditional statement in rendering the Piece class that only renders the span if active is true
-   
+
+- Getting available moves
+   - if (this.state.color === red && this.state.isKing === false)
+      - access dom for getElementById= `${this.state.currentRow + 1}${this.state.currentColumn +/- 1}`
+      - add style to divs to highlight availability and add click handler
+   - possibly follow this logic through remainder of scenarios (color black, king, and if another piece is in the way)
+      - if a piece is all the way to left or right, make sure you have a condition for such a case
+   - find a way to clear the previous styles so only the current piece's available moves get highlighted
+
 Piece placement
 [1,2],[1,4],[1,6],[1,8]
 [2,1],[2,3],[2,5],[2,7]
