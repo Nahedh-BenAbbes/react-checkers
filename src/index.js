@@ -47,7 +47,46 @@ const initialState = {
 
 
 const reducer = (state = initialState, action) => {
-  return state;
+  switch(action.type){
+    case 'REMOVE_PIECE':
+      const updatedPiece = state.pieces.find(piece => {
+        return piece.id === action.payload.id;
+      })
+      const remainingPiecesArray = state.pieces.map((piece, i) => {
+        if ((i + 1) === updatedPiece) {
+          piece = { ...piece, active: false }
+        }
+        return piece;
+      })
+      return {
+        ...state,
+        pieces: remainingPiecesArray
+      }
+
+    case 'MOVE_PIECE':
+      return { ...state }
+
+    case 'GET_AVAILABLE_MOVE':
+      return { ...state }
+
+    case 'KING':
+      const kingPiece = state.pieces.find(piece => {
+        return piece.id === action.payload.id;
+      })
+      const withKingPiecesArray = state.pieces.map((piece, i) => {
+        if ((i + 1) === kingPiece) {
+          piece = { ...piece, isKing: true }
+        }
+        return piece;
+      })
+      return {
+        ...state,
+        pieces: withKingPiecesArray
+      }
+
+    default:
+      return state;
+  }
 }
 
 const store = createStore(reducer);

@@ -117,11 +117,24 @@ React
 - payload in dispatch
    - this is how you can pass parameters in dispatch functions 
    
+- Removing a piece 
+   - use active key as boolean
+      - if true, return div with Piece
+	  - if false, return div without Piece
+   - when Board renders the new state, things that need to change:
+      - state.pieces.currentColumn and currentRow where id = Piece.state.id
+	  - each col div will need click handler that returns a new state and sets the state.pieces.currentColumn and currentRow to that div's row/column
+	  - then Board should re-render with the Piece in the new place
+   - when removing a Piece:
+      - set the Piece at state.pieces.id to active: false 
+	  - have a conditional statement in rendering the Piece class that only renders the span if active is true
+   
 Piece placement
 [1,2],[1,4],[1,6],[1,8]
 [2,1],[2,3],[2,5],[2,7]
 [3,2],[3,4],[3,6],[3,8]
 - Use if/else if statements
+   - instantiate the pieces array in initialState to where they all first start 
 
 - pieces array, what each object will look like 
 pieces = [
@@ -169,3 +182,6 @@ Example code snippets of possible board state:
 					);
 				})}
 				
+1st loop
+x = 0; y = 1; i = 0;
+{ id: 1, currentRow: 0, currentColumn: 1, color: 'black' }

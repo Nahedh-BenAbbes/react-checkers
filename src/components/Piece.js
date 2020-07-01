@@ -39,13 +39,15 @@ class Piece extends Component {
     }
 
     // Get available spaces to move based on color/current row and column
-    getAvailableMove = () => {
-        return
+    getAvailableMove = (event) => {
+        console.log(event.target.dataset.id);
+        console.log(`Current column: ${event.target.dataset.column}\nCurrent row: ${event.target.dataset.row}`);
+
     }
 
     render = () => {
         let pieceColor = `player-${this.state.color}`
-        let pieceImg = this.state.active ? <span className={pieceColor}></span> : ''
+        let pieceImg = this.state.active ? <span className={pieceColor} onClick={this.getAvailableMove} data-id={this.state.id} data-column={this.state.currentColumn} data-row={this.state.currentRow}></span> : ''
         return (
             <div>
                 {pieceImg}

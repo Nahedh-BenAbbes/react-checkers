@@ -63,7 +63,12 @@ class Board extends Component {
             )
         })
         return (
-            <div className="Board container">{newBoard}</div>
+            <div className="Board container">
+                {newBoard}
+                <div id="test-buttons">
+                    <div type="button" className="btn btn-secondary">Remove Piece</div>
+                </div>
+            </div>
         )
     }
 }
@@ -77,16 +82,16 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         movePiece: () => {
-            dispatch({ type: 'MOVEPIECE' });
+            dispatch({ type: 'MOVE_PIECE' });
         },
         removePiece: () => {
-            dispatch({ type: 'REMOVEPIECE' });
+            dispatch({ type: 'REMOVE_PIECE' });
         },
         king: () => {
             dispatch({ type: 'KING' });
         },
         getAvailableMove: () => {
-            dispatch({ type: 'GETAVAILABLEMOVE' })
+            dispatch({ type: 'GET_AVAILABLE_MOVE' });
         }
     }
 }
