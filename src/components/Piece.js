@@ -38,23 +38,50 @@ class Piece extends Component {
         const currentColumn = event.target.dataset.column;
         const currentRow = event.target.dataset.row;
 
+        console.log(`Current column: ${currentColumn}\nCurrent Row: ${currentRow}`)
+        let firstMove = ''
+        let secondMove = ''
         if (this.state.color === 'red') {
-            const firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
-            const secondMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
-
-            document.getElementById(firstMove).style.backgroundColor = "green";
-            document.getElementById(firstMove).style.opacity = "0.5";
-            document.getElementById(secondMove).style.backgroundColor = "green";
-            document.getElementById(secondMove).style.opacity = "0.5";
+            switch (currentColumn) {
+                case '7':
+                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    break;
+                case '0':
+                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    break;
+                default:
+                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
+                    secondMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    document.getElementById(secondMove).style.backgroundColor = "green";
+                    document.getElementById(secondMove).style.opacity = "0.5";
+            }
             
         } else if (this.state.color === 'black') {
-            const firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
-            const secondMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
-
-            document.getElementById(firstMove).style.backgroundColor = "green";
-            document.getElementById(firstMove).style.opacity = "0.5";
-            document.getElementById(secondMove).style.backgroundColor = "green";
-            document.getElementById(secondMove).style.opacity = "0.5";
+            switch(currentColumn) {
+                case '7':
+                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    break;
+                case '0':
+                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    break;
+                default:
+                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
+                    secondMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
+                    document.getElementById(firstMove).style.backgroundColor = "green";
+                    document.getElementById(firstMove).style.opacity = "0.5";
+                    document.getElementById(secondMove).style.backgroundColor = "green";
+                    document.getElementById(secondMove).style.opacity = "0.5";
+            }
         }
 
     }
