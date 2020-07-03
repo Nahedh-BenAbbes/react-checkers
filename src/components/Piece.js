@@ -88,12 +88,11 @@ class Piece extends Component {
 
     render = () => {
         let pieceColor = `player-${this.state.color}`
-        let pieceImg = this.state.active ? <span className={pieceColor} onClick={this.getAvailableMove} data-id={this.state.id} data-column={this.state.currentColumn} data-row={this.state.currentRow}></span> : ''
+        let pieceImg = this.state.active ? <span className={pieceColor}></span> : ''
         return (
             <div>
                 {pieceImg}
-            </div>
-            
+            </div>       
         )
     }
 }

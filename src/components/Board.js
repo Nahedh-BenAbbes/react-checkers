@@ -43,15 +43,16 @@ class Board extends Component {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
                                     <div key={y} id={rowColumn} className="col">
-                                        <Piece 
-                                            id={this.props.state.pieces[i].id} 
-                                            color={this.props.state.pieces[i].color} 
-                                            currentRow={this.props.state.pieces[i].currentRow} 
-                                            currentColumn={this.props.state.pieces[i].currentColumn}
-                                            active={this.props.state.pieces[i].active}
-                                            isKing={this.props.state.pieces[i].isKing}
-                                            // onClick={this.props.} 
-                                        />
+                                        <div onClick={this.getAvailableMove}>
+                                            <Piece 
+                                                id={this.props.state.pieces[i].id} 
+                                                color={this.props.state.pieces[i].color} 
+                                                currentRow={this.props.state.pieces[i].currentRow} 
+                                                currentColumn={this.props.state.pieces[i].currentColumn}
+                                                active={this.props.state.pieces[i].active}
+                                                isKing={this.props.state.pieces[i].isKing}
+                                            />
+                                        </div>
                                     </div>
                                 )
                             }                          
