@@ -43,7 +43,7 @@ class Board extends Component {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
                                     <div key={y} id={rowColumn} className="col">
-                                        <div onClick={this.getAvailableMove}>
+                                        <div onClick={() => this.getAvailableMove(x, y)}>
                                             <Piece 
                                                 id={this.props.state.pieces[i].id} 
                                                 color={this.props.state.pieces[i].color} 
@@ -92,8 +92,8 @@ const mapDispatchToProps = (dispatch) => {
         king: () => {
             dispatch({ type: 'KING' });
         },
-        getAvailableMove: () => {
-            dispatch({ type: 'GET_AVAILABLE_MOVE' });
+        getAvailableMove: (x, y) => {
+            dispatch({ type: 'GET_AVAILABLE_MOVE', payload: { currentRow: x, currentColumn: y } });
         }
     }
 }

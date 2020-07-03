@@ -67,6 +67,7 @@ const reducer = (state = initialState, action) => {
       return { ...state }
 
     case 'GET_AVAILABLE_MOVE':
+      const { currentRow, currentColumn } = action.payload;
       return { ...state }
 
     case 'KING':

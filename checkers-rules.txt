@@ -137,6 +137,10 @@ React
       - if a piece is all the way to left or right, make sure you have a condition for such a case
    - find a way to clear the previous styles so only the current piece's available moves get highlighted
 
+- Moving a piece 
+   - will most likely have to move the getAvailableMove() function to Board.js and render only {pieceImg} from Piece.js 
+   - also need to remove all DOM styling and move that to redux 
+   
 Piece placement
 [1,2],[1,4],[1,6],[1,8]
 [2,1],[2,3],[2,5],[2,7]
