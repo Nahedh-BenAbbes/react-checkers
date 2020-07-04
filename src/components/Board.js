@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import './Board.css';
 import Piece from './Piece';
+import Square from './Square';
 import { connect } from 'react-redux';
 
 
@@ -24,6 +25,10 @@ class Board extends Component {
         this.props.getAvailableMove()
     }
 
+    updateSquare = (id, x, y, piece, available) => {
+        this.props.updateSquare(id, x, y, piece, available)
+    }
+
     render = () => {
 
         let newBoard = this.props.state.board.map((row, x) => {
@@ -42,7 +47,7 @@ class Board extends Component {
                         for (let i = 0; i < this.props.state.pieces.length; i++) {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
-                                    <div key={y} id={rowColumn} className="col">
+                                    <div id={rowColumn} className="col">
                                         <div onClick={() => this.getAvailableMove(x, y)}>
                                             <Piece 
                                                 id={this.props.state.pieces[i].id} 
@@ -93,7 +98,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'KING' });
         },
         getAvailableMove: (x, y) => {
-            dispatch({ type: 'GET_AVAILABLE_MOVE', payload: { currentRow: x, currentColumn: y } });
+            dispatch({ type: 'GET_AVAILABLE_MOVE', payload: { currentRow: x, currentColumn: y }});
+        },
+        updateSquare: (id, x, y, piece, available) => {
+            dispatch({ type: 'UPDATE_SQUARE', payload: { id: id, x: x, y: y, piece: piece, available: available }});
         }
     }
 }

@@ -8,14 +8,86 @@ import { Provider } from 'react-redux';
 
 const initialState = {
   board: [
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', '']
+      [
+        { id: 0, data: { x: 0, y: 0, available: false } }, 
+        { id: 1, data: { x: 0, y: 1, available: false } }, 
+        { id: 2, data: { x: 0, y: 2, available: false } }, 
+        { id: 3, data: { x: 0, y: 3, available: false } }, 
+        { id: 4, data: { x: 0, y: 4, available: false } }, 
+        { id: 5, data: { x: 0, y: 5, available: false } }, 
+        { id: 6, data: { x: 0, y: 6, available: false } }, 
+        { id: 7, data: { x: 0, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 1, y: 0, available: false } }, 
+        { id: 1, data: { x: 1, y: 1, available: false } }, 
+        { id: 2, data: { x: 1, y: 2, available: false } }, 
+        { id: 3, data: { x: 1, y: 3, available: false } }, 
+        { id: 4, data: { x: 1, y: 4, available: false } }, 
+        { id: 5, data: { x: 1, y: 5, available: false } }, 
+        { id: 6, data: { x: 1, y: 6, available: false } }, 
+        { id: 7, data: { x: 1, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 2, y: 0, available: false } }, 
+        { id: 1, data: { x: 2, y: 1, available: false } }, 
+        { id: 2, data: { x: 2, y: 2, available: false } }, 
+        { id: 3, data: { x: 2, y: 3, available: false } }, 
+        { id: 4, data: { x: 2, y: 4, available: false } }, 
+        { id: 5, data: { x: 2, y: 5, available: false } }, 
+        { id: 6, data: { x: 2, y: 6, available: false } }, 
+        { id: 7, data: { x: 2, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 3, y: 0, available: false } }, 
+        { id: 1, data: { x: 3, y: 1, available: false } }, 
+        { id: 2, data: { x: 3, y: 2, available: false } }, 
+        { id: 3, data: { x: 3, y: 3, available: false } }, 
+        { id: 4, data: { x: 3, y: 4, available: false } }, 
+        { id: 5, data: { x: 3, y: 5, available: false } }, 
+        { id: 6, data: { x: 3, y: 6, available: false } }, 
+        { id: 7, data: { x: 3, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 4, y: 0, available: false } }, 
+        { id: 1, data: { x: 4, y: 1, available: false } }, 
+        { id: 2, data: { x: 4, y: 2, available: false } }, 
+        { id: 3, data: { x: 4, y: 3, available: false } }, 
+        { id: 4, data: { x: 4, y: 4, available: false } }, 
+        { id: 5, data: { x: 4, y: 5, available: false } }, 
+        { id: 6, data: { x: 4, y: 6, available: false } }, 
+        { id: 7, data: { x: 4, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 5, y: 0, available: false } }, 
+        { id: 1, data: { x: 5, y: 1, available: false } }, 
+        { id: 2, data: { x: 5, y: 2, available: false } }, 
+        { id: 3, data: { x: 5, y: 3, available: false } }, 
+        { id: 4, data: { x: 5, y: 4, available: false } }, 
+        { id: 5, data: { x: 5, y: 5, available: false } }, 
+        { id: 6, data: { x: 5, y: 6, available: false } }, 
+        { id: 7, data: { x: 5, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 6, y: 0, available: false } }, 
+        { id: 1, data: { x: 6, y: 1, available: false } }, 
+        { id: 2, data: { x: 6, y: 2, available: false } }, 
+        { id: 3, data: { x: 6, y: 3, available: false } }, 
+        { id: 4, data: { x: 6, y: 4, available: false } }, 
+        { id: 5, data: { x: 6, y: 5, available: false } }, 
+        { id: 6, data: { x: 6, y: 6, available: false } }, 
+        { id: 7, data: { x: 6, y: 7, available: false } }
+      ],
+      [
+        { id: 0, data: { x: 7, y: 0, available: false } }, 
+        { id: 1, data: { x: 7, y: 1, available: false } }, 
+        { id: 2, data: { x: 7, y: 2, available: false } }, 
+        { id: 3, data: { x: 7, y: 3, available: false } }, 
+        { id: 4, data: { x: 7, y: 4, available: false } }, 
+        { id: 5, data: { x: 7, y: 5, available: false } }, 
+        { id: 6, data: { x: 7, y: 6, available: false } }, 
+        { id: 7, data: { x: 7, y: 7, available: false } }
+      ]
   ],
   pieces: [
     { id: 1, currentRow: 0, currentColumn: 1, color: 'black', isKing: false, active: true },
@@ -85,6 +157,30 @@ const reducer = (state = initialState, action) => {
         pieces: withKingPiecesArray
       }
 
+    case 'UPDATE_SQUARE':
+      const updatedSquare = state.board[action.payload.x].find((square) => {
+        return square.id === action.payload.y
+      })
+      updatedSquare.data = {
+        x: action.payload.x,
+        y: action.payload.y,
+        piece: action.payload.piece,
+        available: action.payload.available
+      }
+
+      const newBoard = state.board.map((row, x) => {
+        const newRow = row.map((square, y) => {
+          if (y === action.payload.y) {
+            square = { ...square, updatedSquare }
+          }
+          return square;
+        })
+        return newRow;
+      })
+      return {
+        ...state,
+        board: newBoard
+      }
     default:
       return state;
   }
