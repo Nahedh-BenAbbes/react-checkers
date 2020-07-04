@@ -21,12 +21,72 @@ class Board extends Component {
         this.props.king()
     }
 
-    getAvailableMove = () => {
-        this.props.getAvailableMove()
+    getAvailableMove = (x, y, color) => {
+        let availableMoves = []
+        let move = {}
+        if (color === 'red') {
+            switch(x) {
+                case '7':
+                    move.id = y;
+                    move.x = x - 1;
+                    move.y = y - 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    break;
+                case '0':
+                    move.id = y;
+                    move.x = x - 1;
+                    move.y = y + 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    break; 
+                default:
+                    move.id = y;
+                    move.x = x - 1;
+                    move.y = y + 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    move.id = y;
+                    move.x = x - 1;
+                    move.y = y - 1;
+                    move.available = true;
+                    availableMoves.push(move);
+            }
+            this.props.updateSquare(availableMoves);
+        } else if (color === 'black') {
+            switch(x) {
+                case '7':
+                    move.id = y;
+                    move.x = x + 1;
+                    move.y = y - 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    break;
+                case '0':
+                    move.id = y;
+                    move.x = x + 1;
+                    move.y = y + 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    break; 
+                default:
+                    move.id = y;
+                    move.x = x + 1;
+                    move.y = y + 1;
+                    move.available = true;
+                    availableMoves.push(move);
+                    move.id = y;
+                    move.x = x + 1;
+                    move.y = y + 1;
+                    move.available = true;
+                    availableMoves.push(move);
+            }
+            this.props.updateSquare(availableMoves);
+        }
     }
 
-    updateSquare = (id, x, y, piece, available) => {
-        this.props.updateSquare(id, x, y, piece, available)
+    updateSquare = (availableMoves) => {
+        this.props.updateSquare(availableMoves);
     }
 
     render = () => {
@@ -52,7 +112,7 @@ class Board extends Component {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
                                     <div id={rowColumn} className={ifAvailable}>
-                                        <div onClick={() => this.getAvailableMove(x, y)}>
+                                        <div onClick={() => this.getAvailableMove(x, y, this.props.state.pieces[i].color)}>
                                             <Piece 
                                                 id={this.props.state.pieces[i].id} 
                                                 color={this.props.state.pieces[i].color} 
@@ -104,8 +164,8 @@ const mapDispatchToProps = (dispatch) => {
         getAvailableMove: (x, y) => {
             dispatch({ type: 'GET_AVAILABLE_MOVE', payload: { currentRow: x, currentColumn: y }});
         },
-        updateSquare: (id, x, y, piece, available) => {
-            dispatch({ type: 'UPDATE_SQUARE', payload: { id: id, x: x, y: y, piece: piece, available: available }});
+        updateSquare: (availableMoves) => {
+            dispatch({ type: 'UPDATE_SQUARE', payload: { availableMoves }});
         }
     }
 }
