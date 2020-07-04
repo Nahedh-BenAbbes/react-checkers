@@ -43,11 +43,15 @@ class Board extends Component {
                 <div key={x} className={evenOdd}>
                     {row.map((col, y) => {
                         const rowColumn = `${x}${y}`
+                        let ifAvailable = 'col';
+                        if (this.props.state.board[x][y].data.available) {
+                            ifAvailable = 'col available';
+                        }
                         // Set up conditional statements for mounting the Piece component
                         for (let i = 0; i < this.props.state.pieces.length; i++) {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
                                 return (
-                                    <div id={rowColumn} className="col">
+                                    <div id={rowColumn} className={ifAvailable}>
                                         <div onClick={() => this.getAvailableMove(x, y)}>
                                             <Piece 
                                                 id={this.props.state.pieces[i].id} 
@@ -63,7 +67,7 @@ class Board extends Component {
                             }                          
                         }
                         return (
-                            <div key={y} id={rowColumn} className="col"></div>
+                            <div key={y} id={rowColumn} className={ifAvailable}></div>
                         )
                     })}
                 </div>

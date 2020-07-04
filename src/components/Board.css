@@ -27,3 +27,8 @@
     padding: 0px;
     border: 1px solid black;
 }
+
+.available {
+    background-color: green;
+    opacity: 0.5;
+}

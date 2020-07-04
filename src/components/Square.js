@@ -11,7 +11,11 @@ class Square extends Component {
     }
 
     render = () => {
-        return <div className="col" id={this.state.id} piece={this.state.piece} available={this.state.available}></div>
+        let ifAvailable = 'col';
+        if (this.state.available) {
+            ifAvailable = 'col available'
+        }
+        return <div className={ifAvailable} id={this.state.id}></div>
     }
 }
 
