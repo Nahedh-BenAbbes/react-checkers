@@ -11,6 +11,7 @@ class Board extends Component {
     movePiece = (piece, square) => {
         console.log(`movePiece() args:\n\tpiece: ${JSON.stringify(piece)}\n\tsquare: ${JSON.stringify(square)}`)
         this.props.movePiece(piece, square);
+        this.props.clearAvailableMoves();
     }
 
     updatePendingMove = (piece) => {
@@ -82,23 +83,27 @@ class Board extends Component {
             })
             console.log(`New Move: ${JSON.stringify(newMove)}`)
             console.log(`hasPiece: ${this.validateSquare(newMove)}`)
-            if (this.validateSquare(newMove) && newMove.data.pieceColor === color) {
+            let hasPiece = this.validateSquare(newMove);
+            if (hasPiece && newMove.data.pieceColor === color) {
                 updatedMoves.push(newMove);
-            } else if (this.validateSquare(newMove) && newMove.data.pieceColor !== color) {
+            } else if (hasPiece && newMove.data.pieceColor !== color) {
                 // Find the next possible square here
+                console.log('New move is blocked by opposite color');
                 if (newMove.data.pieceColor === 'red' && (newMove.data.y === 7 || newMove.data.y === 0)) {
+                    console.log('New move is on edge of board');
                     updatedMoves.push(newMove);
                 } else {
-                    newMove = this.updateMove(newMove);
-                    if (!this.validateSquare(newMove)) {
-                        newMove.data.available = true;
-                        updatedMoves.push(newMove);
+                    console.log('Finding new move...');
+                    let updatedMove = this.updateMove(newMove, move.y);
+                    let updatedHasPiece = this.validateSquare(updatedMove);
+                    if (!updatedHasPiece) {
+                        updatedMove.data.available = true;
+                        updatedMoves.push(updatedMove);
                     }
                 }
             } else {
                 newMove.data.available = true;
                 updatedMoves.push(newMove);
-                return;
             }
         })
         return updatedMoves; 
@@ -117,18 +122,21 @@ class Board extends Component {
     // Update the move to add or subtract rows/columns depending on piece position and color
     updateMove = (move, origPosition) => {
         let newMove = {}
-        if (move.color === 'red') {
-            if (move.y < origPosition) {
-                newMove = { id: move.id - 1, x: move.x - 1, y: move.y - 1, available: true }
+        console.log(`Before updating move: ${JSON.stringify(move)}`);
+        if (move.data.pieceColor === 'red') {
+            if (move.data.y < origPosition) {
+                newMove = { id: move.id - 1, data: { x: move.data.x - 1, y: move.data.y - 1, available: true } }
             } else {
-                newMove = { id: move.id + 1, x: move.x - 1, y: move.y + 1, available: true }
+                newMove = { id: move.id + 1, data: { x: move.data.x - 1, y: move.data.y + 1, available: true } }
             }
-        } else if (move.color === 'black') {
+        } else if (move.data.pieceColor === 'black') {
             if (move.y < origPosition) {
-                newMove = { id: move.id - 1, x: move.x + 1, y: move.y - 1, available: true }
+                newMove = { id: move.id - 1, data: { x: move.data.x + 1, y: move.data.y - 1, available: true } }
             } else {
-                newMove = { id: move.id + 1, x: move.x + 1, y: move.y + 1, available: true }
+                newMove = { id: move.id + 1, data: { x: move.data.x + 1, y: move.data.y + 1, available: true } }
             }
+        } else {
+            newMove = move;
         }
 
         return newMove;
