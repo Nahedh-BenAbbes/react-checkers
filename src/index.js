@@ -138,10 +138,6 @@ const reducer = (state = initialState, action) => {
     case 'MOVE_PIECE':
       return { ...state }
 
-    case 'GET_AVAILABLE_MOVE':
-      const { currentRow, currentColumn } = action.payload;
-      return { ...state }
-
     case 'KING':
       const kingPiece = state.pieces.find(piece => {
         return piece.id === action.payload.id;
@@ -157,6 +153,19 @@ const reducer = (state = initialState, action) => {
         pieces: withKingPiecesArray
       }
 
+    case 'CLEAR_AVAILABLE_MOVES':
+      const clearedBoard = state.board.map((row, x) => {
+        const newRow = state.board[x].map(square => {
+          square.data.available = false
+          return square;
+        })
+        return newRow;
+      })
+      return {
+        ...state,
+        board: clearedBoard
+      }
+    
     case 'UPDATE_SQUARE':
       let updatedSquares = []
       action.payload.availableMoves.forEach((move) => {
@@ -182,6 +191,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         board: newBoard
       }
+
     default:
       return state;
   }

@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import './Board.css';
 import Piece from './Piece';
-import Square from './Square';
 import { connect } from 'react-redux';
 
 
@@ -22,71 +21,45 @@ class Board extends Component {
     }
 
     getAvailableMove = (x, y, color) => {
+        this.props.clearAvailableMoves();
         let availableMoves = []
-        let move = {}
         if (color === 'red') {
             switch(x) {
                 case '7':
-                    move.id = y;
-                    move.x = x - 1;
-                    move.y = y - 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y - 1, x: x - 1, y: y - 1, available: true });
                     break;
                 case '0':
-                    move.id = y;
-                    move.x = x - 1;
-                    move.y = y + 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y + 1, x: x - 1, y: y + 1, available: true });
                     break; 
                 default:
-                    move.id = y;
-                    move.x = x - 1;
-                    move.y = y + 1;
-                    move.available = true;
-                    availableMoves.push(move);
-                    move.id = y;
-                    move.x = x - 1;
-                    move.y = y - 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y + 1, x: x - 1, y: y + 1, available: true });
+                    availableMoves.push({ id: y - 1, x: x - 1, y: y - 1, available: true });
             }
+            console.log(availableMoves);
             this.props.updateSquare(availableMoves);
         } else if (color === 'black') {
             switch(x) {
                 case '7':
-                    move.id = y;
-                    move.x = x + 1;
-                    move.y = y - 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y - 1, x: x + 1, y: y - 1, available: true });
                     break;
                 case '0':
-                    move.id = y;
-                    move.x = x + 1;
-                    move.y = y + 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y + 1, x: x + 1, y: y + 1, available: true });
                     break; 
                 default:
-                    move.id = y;
-                    move.x = x + 1;
-                    move.y = y + 1;
-                    move.available = true;
-                    availableMoves.push(move);
-                    move.id = y;
-                    move.x = x + 1;
-                    move.y = y + 1;
-                    move.available = true;
-                    availableMoves.push(move);
+                    availableMoves.push({ id: y + 1, x: x + 1, y: y + 1, available: true });
+                    availableMoves.push({ id: y - 1, x: x + 1, y: y - 1, available: true });
             }
+            console.log(availableMoves);
             this.props.updateSquare(availableMoves);
         }
     }
 
     updateSquare = (availableMoves) => {
         this.props.updateSquare(availableMoves);
+    }
+
+    clearAvailableMoves = () => {
+        this.props.clearAvailableMoves();
     }
 
     render = () => {
@@ -161,11 +134,11 @@ const mapDispatchToProps = (dispatch) => {
         king: () => {
             dispatch({ type: 'KING' });
         },
-        getAvailableMove: (x, y) => {
-            dispatch({ type: 'GET_AVAILABLE_MOVE', payload: { currentRow: x, currentColumn: y }});
-        },
         updateSquare: (availableMoves) => {
             dispatch({ type: 'UPDATE_SQUARE', payload: { availableMoves }});
+        },
+        clearAvailableMoves: () => {
+            dispatch({ type: 'CLEAR_AVAILABLE_MOVES' });
         }
     }
 }
