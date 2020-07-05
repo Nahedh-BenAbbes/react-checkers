@@ -23,12 +23,13 @@ class Board extends Component {
     getAvailableMove = (x, y, color) => {
         this.props.clearAvailableMoves();
         let availableMoves = []
+        console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
         if (color === 'red') {
-            switch(x) {
-                case '7':
+            switch(y) {
+                case 7:
                     availableMoves.push({ id: y - 1, x: x - 1, y: y - 1, available: true });
                     break;
-                case '0':
+                case 0:
                     availableMoves.push({ id: y + 1, x: x - 1, y: y + 1, available: true });
                     break; 
                 default:
@@ -38,11 +39,11 @@ class Board extends Component {
             console.log(availableMoves);
             this.props.updateSquare(availableMoves);
         } else if (color === 'black') {
-            switch(x) {
-                case '7':
+            switch(y) {
+                case 7:
                     availableMoves.push({ id: y - 1, x: x + 1, y: y - 1, available: true });
                     break;
-                case '0':
+                case 0:
                     availableMoves.push({ id: y + 1, x: x + 1, y: y + 1, available: true });
                     break; 
                 default:
