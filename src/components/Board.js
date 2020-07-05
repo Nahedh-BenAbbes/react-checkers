@@ -8,12 +8,13 @@ import { connect } from 'react-redux';
 
 class Board extends Component {
 
-    movePiece = () => {
-        this.props.movePiece()
+    movePiece = (piece, square) => {
+        console.log(`movePiece() args:\n\tpiece: ${JSON.stringify(piece)}\n\tsquare: ${JSON.stringify(square)}`)
+        this.props.movePiece(piece, square);
     }
 
-    removePiece = () => {
-        this.props.removePiece()
+    updatePendingMove = (piece) => {
+        this.props.updatePendingMove(piece)
     }
 
     king = () => {
@@ -23,6 +24,12 @@ class Board extends Component {
     // Update board state with available moves for currently selected piece
     getAvailableMove = (x, y, color) => {
         this.props.clearAvailableMoves();
+        const selectedPiece = this.props.state.pieces.find(piece => {
+            if (piece.currentRow === x && piece.currentColumn === y) {
+                return piece;
+            }
+        })
+        this.updatePendingMove(selectedPiece);
         let availableMoves = []
         console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
         if (color === 'red') {
@@ -97,7 +104,7 @@ class Board extends Component {
         return updatedMoves; 
     }
 
-    // Check board state on individual objects to see if it has a piece
+    // Check board state on individual div objects to see if it has a piece
     validateSquare = (square) => {
         console.log(`validateSquare() square object: ${JSON.stringify(square)}`)
         const checkedSquare = this.props.state.board[square.data.x].find(sqr => {
@@ -173,7 +180,15 @@ class Board extends Component {
                             }                          
                         }
                         return (
-                            <div key={y} id={rowColumn} className={ifAvailable}></div>
+                            <div 
+                                key={y} 
+                                id={rowColumn} 
+                                className={ifAvailable} 
+                                onClick={e => {
+                                    this.props.state.board[x][y].data.available ? 
+                                    this.movePiece(this.props.state.pendingMove, this.props.state.board[x][y]) :
+                                    alert('That space is unavailable for the current piece selected, please select a green space.')}}>
+                            </div>
                         )
                     })}
                 </div>
@@ -198,11 +213,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        movePiece: () => {
-            dispatch({ type: 'MOVE_PIECE' });
+        movePiece: (piece, square) => {
+            dispatch({ type: 'MOVE_PIECE' , payload: { piece: piece, square: square }});
         },
-        removePiece: () => {
-            dispatch({ type: 'REMOVE_PIECE' });
+        updatePendingMove: (piece) => {
+            dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece } });
         },
         king: () => {
             dispatch({ type: 'KING' });

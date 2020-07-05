@@ -114,29 +114,48 @@ const initialState = {
     { id: 22, currentRow: 7, currentColumn: 2, color: 'red', isKing: false, active: true },
     { id: 23, currentRow: 7, currentColumn: 4, color: 'red', isKing: false, active: true },
     { id: 24, currentRow: 7, currentColumn: 6, color: 'red', isKing: false, active: true }
-  ]
+  ],
+  pendingMove: {}
 }
 
 
 const reducer = (state = initialState, action) => {
   switch(action.type){
-    case 'REMOVE_PIECE':
-      const updatedPiece = state.pieces.find(piece => {
-        return piece.id === action.payload.id;
+    // Store piece selected for moving
+    case 'UPDATE_PENDING_MOVE':
+      const newPendingPiece = action.payload.piece
+    return { ...state, pendingMove: newPendingPiece }
+
+    case 'MOVE_PIECE':
+      // Get the selected div's data from board array from id passed through payload
+      const chosenSquare = state.board[action.payload.square.data.x].find((sqr, i) => {
+        return sqr.id === action.payload.square.id;
       })
-      const remainingPiecesArray = state.pieces.map((piece, i) => {
-        if ((i + 1) === updatedPiece) {
-          piece = { ...piece, active: false }
+      // Loop through the board array and update both the new and old div
+      const updatePiecesBoard = state.board.map((row, x) => {
+        const newRow = state.board[x].map((sqr, y) => {
+          if (x === chosenSquare.data.x && y === chosenSquare.data.y) {
+            sqr = { id: sqr.id, data: { ...sqr.data, available: false, hasPiece: true, pieceColor: action.payload.piece.color }}
+          } else if (x === action.payload.piece.currentRow && y === action.payload.piece.currentColumn) {
+            sqr = { id: sqr.id, data: { ...sqr.data, available: false, hasPiece: false, pieceColor: null }}
+          }
+          return sqr;
+        })
+        return newRow;
+      })
+      // Loop through pieces and update the row and column of the selected piece
+      const updatePiecesArray = state.pieces.map((piece, i) => {
+        if (piece.id === action.payload.piece.id) {
+          piece = { ...piece, currentRow: chosenSquare.data.x, currentColumn: chosenSquare.data.y}
         }
         return piece;
       })
-      return {
-        ...state,
-        pieces: remainingPiecesArray
-      }
 
-    case 'MOVE_PIECE':
-      return { ...state }
+      return { 
+        ...state,
+        board: updatePiecesBoard,
+        pieces: updatePiecesArray 
+      }
 
     case 'KING':
       const kingPiece = state.pieces.find(piece => {
