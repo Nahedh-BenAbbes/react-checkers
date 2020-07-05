@@ -23,7 +23,7 @@ class Board extends Component {
     getAvailableMove = (x, y, color) => {
         this.props.clearAvailableMoves();
         let availableMoves = []
-        console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
+        // console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
         if (color === 'red') {
             switch(y) {
                 case 7:
@@ -54,6 +54,17 @@ class Board extends Component {
             this.props.updateSquare(availableMoves);
         }
     }
+
+    /* validateSquare = (move, color) => {
+        const newMove = this.props.state.board[move.x].find(square => {
+            return square.id = move.y;
+        })
+        if (newMove.hasPiece === true && newMove.color === color) {
+            return false
+        } else if (newMove.hasPiece === false) {
+            return true
+        } 
+    } */
 
     updateSquare = (availableMoves) => {
         this.props.updateSquare(availableMoves);

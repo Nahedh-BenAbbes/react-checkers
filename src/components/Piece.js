@@ -33,59 +33,6 @@ class Piece extends Component {
         return
     }
 
-    // Get available spaces to move based on color/current row and column
-    getAvailableMove = (event) => {
-        const currentColumn = event.target.dataset.column;
-        const currentRow = event.target.dataset.row;
-
-        console.log(`Current column: ${currentColumn}\nCurrent Row: ${currentRow}`)
-        let firstMove = ''
-        let secondMove = ''
-        if (this.state.color === 'red') {
-            switch (currentColumn) {
-                case '7':
-                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    break;
-                case '0':
-                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    break;
-                default:
-                    firstMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) + 1}`;
-                    secondMove = `${parseInt(currentRow) - 1}${parseInt(currentColumn) - 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    document.getElementById(secondMove).style.backgroundColor = "green";
-                    document.getElementById(secondMove).style.opacity = "0.5";
-            }
-            
-        } else if (this.state.color === 'black') {
-            switch(currentColumn) {
-                case '7':
-                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    break;
-                case '0':
-                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    break;
-                default:
-                    firstMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) + 1}`;
-                    secondMove = `${parseInt(currentRow) + 1}${parseInt(currentColumn) - 1}`;
-                    document.getElementById(firstMove).style.backgroundColor = "green";
-                    document.getElementById(firstMove).style.opacity = "0.5";
-                    document.getElementById(secondMove).style.backgroundColor = "green";
-                    document.getElementById(secondMove).style.opacity = "0.5";
-            }
-        }
-
-    }
-
     render = () => {
         let pieceColor = `player-${this.state.color}`
         let pieceImg = this.state.active ? <span className={pieceColor}></span> : ''

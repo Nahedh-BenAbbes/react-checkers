@@ -9,84 +9,84 @@ import { Provider } from 'react-redux';
 const initialState = {
   board: [
       [
-        { id: 0, data: { x: 0, y: 0, available: false } }, 
-        { id: 1, data: { x: 0, y: 1, available: false } }, 
-        { id: 2, data: { x: 0, y: 2, available: false } }, 
-        { id: 3, data: { x: 0, y: 3, available: false } }, 
-        { id: 4, data: { x: 0, y: 4, available: false } }, 
-        { id: 5, data: { x: 0, y: 5, available: false } }, 
-        { id: 6, data: { x: 0, y: 6, available: false } }, 
-        { id: 7, data: { x: 0, y: 7, available: false } }
+        { id: 0, data: { x: 0, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 1, data: { x: 0, y: 1, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 2, data: { x: 0, y: 2, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 3, data: { x: 0, y: 3, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 4, data: { x: 0, y: 4, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 5, data: { x: 0, y: 5, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 6, data: { x: 0, y: 6, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 7, data: { x: 0, y: 7, available: false, hasPiece: true, pieceColor: 'black' } }
       ],
       [
-        { id: 0, data: { x: 1, y: 0, available: false } }, 
-        { id: 1, data: { x: 1, y: 1, available: false } }, 
-        { id: 2, data: { x: 1, y: 2, available: false } }, 
-        { id: 3, data: { x: 1, y: 3, available: false } }, 
-        { id: 4, data: { x: 1, y: 4, available: false } }, 
-        { id: 5, data: { x: 1, y: 5, available: false } }, 
-        { id: 6, data: { x: 1, y: 6, available: false } }, 
-        { id: 7, data: { x: 1, y: 7, available: false } }
+        { id: 0, data: { x: 1, y: 0, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 1, data: { x: 1, y: 1, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 2, data: { x: 1, y: 2, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 3, data: { x: 1, y: 3, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 4, data: { x: 1, y: 4, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 5, data: { x: 1, y: 5, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 6, data: { x: 1, y: 6, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 7, data: { x: 1, y: 7, available: false, hasPiece: false, pieceColor: null } }
       ],
       [
-        { id: 0, data: { x: 2, y: 0, available: false } }, 
-        { id: 1, data: { x: 2, y: 1, available: false } }, 
-        { id: 2, data: { x: 2, y: 2, available: false } }, 
-        { id: 3, data: { x: 2, y: 3, available: false } }, 
-        { id: 4, data: { x: 2, y: 4, available: false } }, 
-        { id: 5, data: { x: 2, y: 5, available: false } }, 
-        { id: 6, data: { x: 2, y: 6, available: false } }, 
-        { id: 7, data: { x: 2, y: 7, available: false } }
+        { id: 0, data: { x: 2, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 1, data: { x: 2, y: 1, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 2, data: { x: 2, y: 2, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 3, data: { x: 2, y: 3, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 4, data: { x: 2, y: 4, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 5, data: { x: 2, y: 5, available: false, hasPiece: true, pieceColor: 'black' } }, 
+        { id: 6, data: { x: 2, y: 6, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 7, data: { x: 2, y: 7, available: false, hasPiece: true, pieceColor: 'black' } }
       ],
       [
-        { id: 0, data: { x: 3, y: 0, available: false } }, 
-        { id: 1, data: { x: 3, y: 1, available: false } }, 
-        { id: 2, data: { x: 3, y: 2, available: false } }, 
-        { id: 3, data: { x: 3, y: 3, available: false } }, 
-        { id: 4, data: { x: 3, y: 4, available: false } }, 
-        { id: 5, data: { x: 3, y: 5, available: false } }, 
-        { id: 6, data: { x: 3, y: 6, available: false } }, 
-        { id: 7, data: { x: 3, y: 7, available: false } }
+        { id: 0, data: { x: 3, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 1, data: { x: 3, y: 1, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 2, data: { x: 3, y: 2, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 3, data: { x: 3, y: 3, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 4, data: { x: 3, y: 4, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 5, data: { x: 3, y: 5, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 6, data: { x: 3, y: 6, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 7, data: { x: 3, y: 7, available: false, hasPiece: false, pieceColor: null } }
       ],
       [
-        { id: 0, data: { x: 4, y: 0, available: false } }, 
-        { id: 1, data: { x: 4, y: 1, available: false } }, 
-        { id: 2, data: { x: 4, y: 2, available: false } }, 
-        { id: 3, data: { x: 4, y: 3, available: false } }, 
-        { id: 4, data: { x: 4, y: 4, available: false } }, 
-        { id: 5, data: { x: 4, y: 5, available: false } }, 
-        { id: 6, data: { x: 4, y: 6, available: false } }, 
-        { id: 7, data: { x: 4, y: 7, available: false } }
+        { id: 0, data: { x: 4, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 1, data: { x: 4, y: 1, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 2, data: { x: 4, y: 2, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 3, data: { x: 4, y: 3, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 4, data: { x: 4, y: 4, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 5, data: { x: 4, y: 5, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 6, data: { x: 4, y: 6, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 7, data: { x: 4, y: 7, available: false, hasPiece: false, pieceColor: null } }
       ],
       [
-        { id: 0, data: { x: 5, y: 0, available: false } }, 
-        { id: 1, data: { x: 5, y: 1, available: false } }, 
-        { id: 2, data: { x: 5, y: 2, available: false } }, 
-        { id: 3, data: { x: 5, y: 3, available: false } }, 
-        { id: 4, data: { x: 5, y: 4, available: false } }, 
-        { id: 5, data: { x: 5, y: 5, available: false } }, 
-        { id: 6, data: { x: 5, y: 6, available: false } }, 
-        { id: 7, data: { x: 5, y: 7, available: false } }
+        { id: 0, data: { x: 5, y: 0, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 1, data: { x: 5, y: 1, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 2, data: { x: 5, y: 2, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 3, data: { x: 5, y: 3, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 4, data: { x: 5, y: 4, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 5, data: { x: 5, y: 5, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 6, data: { x: 5, y: 6, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 7, data: { x: 5, y: 7, available: false, hasPiece: false, pieceColor: null } }
       ],
       [
-        { id: 0, data: { x: 6, y: 0, available: false } }, 
-        { id: 1, data: { x: 6, y: 1, available: false } }, 
-        { id: 2, data: { x: 6, y: 2, available: false } }, 
-        { id: 3, data: { x: 6, y: 3, available: false } }, 
-        { id: 4, data: { x: 6, y: 4, available: false } }, 
-        { id: 5, data: { x: 6, y: 5, available: false } }, 
-        { id: 6, data: { x: 6, y: 6, available: false } }, 
-        { id: 7, data: { x: 6, y: 7, available: false } }
+        { id: 0, data: { x: 6, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 1, data: { x: 6, y: 1, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 2, data: { x: 6, y: 2, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 3, data: { x: 6, y: 3, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 4, data: { x: 6, y: 4, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 5, data: { x: 6, y: 5, available: false, hasPiece: true, pieceColor: 'red' } }, 
+        { id: 6, data: { x: 6, y: 6, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 7, data: { x: 6, y: 7, available: false, hasPiece: true, pieceColor: 'red' } }
       ],
       [
-        { id: 0, data: { x: 7, y: 0, available: false } }, 
-        { id: 1, data: { x: 7, y: 1, available: false } }, 
-        { id: 2, data: { x: 7, y: 2, available: false } }, 
-        { id: 3, data: { x: 7, y: 3, available: false } }, 
-        { id: 4, data: { x: 7, y: 4, available: false } }, 
-        { id: 5, data: { x: 7, y: 5, available: false } }, 
-        { id: 6, data: { x: 7, y: 6, available: false } }, 
-        { id: 7, data: { x: 7, y: 7, available: false } }
+        { id: 0, data: { x: 7, y: 0, available: false, hasPiece: false, pieceColor: 'red' } }, 
+        { id: 1, data: { x: 7, y: 1, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 2, data: { x: 7, y: 2, available: false, hasPiece: false, pieceColor: 'red' } }, 
+        { id: 3, data: { x: 7, y: 3, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 4, data: { x: 7, y: 4, available: false, hasPiece: false, pieceColor: 'red' } }, 
+        { id: 5, data: { x: 7, y: 5, available: false, hasPiece: false, pieceColor: null } }, 
+        { id: 6, data: { x: 7, y: 6, available: false, hasPiece: false, pieceColor: 'red' } }, 
+        { id: 7, data: { x: 7, y: 7, available: false, hasPiece: false, pieceColor: null } }
       ]
   ],
   pieces: [
