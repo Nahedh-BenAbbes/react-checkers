@@ -20,10 +20,11 @@ class Board extends Component {
         this.props.king()
     }
 
+    // Update board state with available moves for currently selected piece
     getAvailableMove = (x, y, color) => {
         this.props.clearAvailableMoves();
         let availableMoves = []
-        // console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
+        console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
         if (color === 'red') {
             switch(y) {
                 case 7:
@@ -36,7 +37,12 @@ class Board extends Component {
                     availableMoves.push({ id: y + 1, x: x - 1, y: y + 1, available: true });
                     availableMoves.push({ id: y - 1, x: x - 1, y: y - 1, available: true });
             }
-            console.log(availableMoves);
+            console.log(`Before validating: ${JSON.stringify(availableMoves)}`);
+            availableMoves = this.validateMoves(availableMoves, color);
+            console.log(`After validating: ${JSON.stringify(availableMoves)}`);
+            if (availableMoves == null) {
+                return;
+            }
             this.props.updateSquare(availableMoves);
         } else if (color === 'black') {
             switch(y) {
@@ -50,21 +56,76 @@ class Board extends Component {
                     availableMoves.push({ id: y + 1, x: x + 1, y: y + 1, available: true });
                     availableMoves.push({ id: y - 1, x: x + 1, y: y - 1, available: true });
             }
-            console.log(availableMoves);
+            console.log(`Before validating: ${JSON.stringify(availableMoves)}`);
+            availableMoves = this.validateMoves(availableMoves, color);
+            console.log(`After validating: ${JSON.stringify(availableMoves)}`);
+            if (availableMoves == null) {
+                return;
+            }
             this.props.updateSquare(availableMoves);
         }
     }
 
-    /* validateSquare = (move, color) => {
-        const newMove = this.props.state.board[move.x].find(square => {
-            return square.id = move.y;
+    // Check if the original checkers moves are valid, and return any updated available moves
+    validateMoves = (moves, color) => {
+        let updatedMoves = []
+        moves.forEach((move, i) => {
+            let newMove = this.props.state.board[move.x].find(square => {
+                return square.id === move.y;
+            })
+            console.log(`New Move: ${JSON.stringify(newMove)}`)
+            console.log(`hasPiece: ${this.validateSquare(newMove)}`)
+            if (this.validateSquare(newMove) && newMove.data.pieceColor === color) {
+                updatedMoves.push(newMove);
+            } else if (this.validateSquare(newMove) && newMove.data.pieceColor !== color) {
+                // Find the next possible square here
+                if (newMove.data.pieceColor === 'red' && (newMove.data.y === 7 || newMove.data.y === 0)) {
+                    updatedMoves.push(newMove);
+                } else {
+                    newMove = this.updateMove(newMove);
+                    if (!this.validateSquare(newMove)) {
+                        newMove.data.available = true;
+                        updatedMoves.push(newMove);
+                    }
+                }
+            } else {
+                newMove.data.available = true;
+                updatedMoves.push(newMove);
+                return;
+            }
         })
-        if (newMove.hasPiece === true && newMove.color === color) {
-            return false
-        } else if (newMove.hasPiece === false) {
-            return true
-        } 
-    } */
+        return updatedMoves; 
+    }
+
+    // Check board state on individual objects to see if it has a piece
+    validateSquare = (square) => {
+        console.log(`validateSquare() square object: ${JSON.stringify(square)}`)
+        const checkedSquare = this.props.state.board[square.data.x].find(sqr => {
+            return sqr.id === square.data.y;
+        })
+
+        return checkedSquare.data.hasPiece;
+    }
+
+    // Update the move to add or subtract rows/columns depending on piece position and color
+    updateMove = (move, origPosition) => {
+        let newMove = {}
+        if (move.color === 'red') {
+            if (move.y < origPosition) {
+                newMove = { id: move.id - 1, x: move.x - 1, y: move.y - 1, available: true }
+            } else {
+                newMove = { id: move.id + 1, x: move.x - 1, y: move.y + 1, available: true }
+            }
+        } else if (move.color === 'black') {
+            if (move.y < origPosition) {
+                newMove = { id: move.id - 1, x: move.x + 1, y: move.y - 1, available: true }
+            } else {
+                newMove = { id: move.id + 1, x: move.x + 1, y: move.y + 1, available: true }
+            }
+        }
+
+        return newMove;
+    }
 
     updateSquare = (availableMoves) => {
         this.props.updateSquare(availableMoves);

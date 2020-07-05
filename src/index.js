@@ -169,17 +169,17 @@ const reducer = (state = initialState, action) => {
     case 'UPDATE_SQUARE':
       let updatedSquares = []
       action.payload.availableMoves.forEach((move) => {
-        const newSquare = state.board[move.x].find((square) => {
-          return square.id === move.y
+        const newSquare = state.board[move.data.x].find((square) => {
+          return square.id === move.data.y
         })
-        newSquare.data.available = move.available;
+        newSquare.data.available = move.data.available;
         updatedSquares.push(newSquare);
       })
       
       const newBoard = state.board.map((row, x) => {
         const newRow = row.map((square, y) => {
           updatedSquares.forEach(newSquare => {
-            if (x === newSquare.x && y === newSquare.y) {
+            if (x === newSquare.data.x && y === newSquare.data.y) {
               square = newSquare;
             }
           })         
