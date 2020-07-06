@@ -8,18 +8,34 @@ import { connect } from 'react-redux';
 
 class Board extends Component {
 
+    // Move selected piece to the selected div
     movePiece = (piece, square) => {
         console.log(`movePiece() args:\n\tpiece: ${JSON.stringify(piece)}\n\tsquare: ${JSON.stringify(square)}`)
+        if (this.props.state.pendingRemoval.length > 0) { // Check if there is a jumped piece
+            this.props.state.pendingRemoval.forEach(rem => {
+                if ((piece.currentColumn + square.data.y) / 2 === rem.currentColumn) {
+                    this.removePiece(rem)
+                }
+            })
+        }
         this.props.movePiece(piece, square);
         this.props.clearAvailableMoves();
     }
 
     updatePendingMove = (piece) => {
-        this.props.updatePendingMove(piece)
+        this.props.updatePendingMove(piece);
+    }
+
+    updatePendingRemoval = (pieces) => {
+        this.props.updatePendingRemoval(pieces);
+    }
+
+    removePiece = (piece) => {
+        this.props.removePiece(piece);
     }
 
     king = () => {
-        this.props.king()
+        this.props.king();
     }
 
     // Update board state with available moves for currently selected piece
@@ -77,6 +93,7 @@ class Board extends Component {
     // Check if the original checkers moves are valid, and return any updated available moves
     validateMoves = (moves, color) => {
         let updatedMoves = []
+        let pendingRemoval = []
         moves.forEach((move, i) => {
             let newMove = this.props.state.board[move.x].find(square => {
                 return square.id === move.y;
@@ -97,6 +114,7 @@ class Board extends Component {
                     let updatedMove = this.updateMove(newMove, move.y, color);
                     let updatedHasPiece = this.validateSquare(updatedMove);
                     if (!updatedHasPiece) {
+                        pendingRemoval.push(newMove);
                         updatedMove.data.available = true;
                         updatedMoves.push(updatedMove);
                     }
@@ -106,6 +124,7 @@ class Board extends Component {
                 updatedMoves.push(newMove);
             }
         })
+        this.updatePendingRemoval(pendingRemoval);
         return updatedMoves; 
     }
 
@@ -225,7 +244,13 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'MOVE_PIECE' , payload: { piece: piece, square: square }});
         },
         updatePendingMove: (piece) => {
-            dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece } });
+            dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece }});
+        },
+        updatePendingRemoval: (pieces) => {
+            dispatch({ type: 'UPDATE_PENDING_REMOVAL', payload: pieces });
+        },
+        removePiece: (piece) => {
+            dispatch({ type: 'REMOVE_PIECE', payload: { piece } });
         },
         king: () => {
             dispatch({ type: 'KING' });

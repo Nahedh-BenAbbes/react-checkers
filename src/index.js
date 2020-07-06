@@ -115,7 +115,8 @@ const initialState = {
     { id: 23, currentRow: 7, currentColumn: 4, color: 'red', isKing: false, active: true },
     { id: 24, currentRow: 7, currentColumn: 6, color: 'red', isKing: false, active: true }
   ],
-  pendingMove: {}
+  pendingMove: {},
+  pendingRemoval: []
 }
 
 
@@ -124,8 +125,14 @@ const reducer = (state = initialState, action) => {
     // Store piece selected for moving
     case 'UPDATE_PENDING_MOVE':
       const newPendingPiece = action.payload.piece
-    return { ...state, pendingMove: newPendingPiece }
+      return { ...state, pendingMove: newPendingPiece }
 
+    // Store potentail pieces for removal
+    case 'UPDATE_PENDING_REMOVAL':
+      const newPendingRemoval = action.payload.pieces
+      return { ...state, pendingRemoval: newPendingRemoval }
+
+    // Move piece to new row and column
     case 'MOVE_PIECE':
       // Get the selected div's data from board array from id passed through payload
       const chosenSquare = state.board[action.payload.square.data.x].find((sqr, i) => {
@@ -157,6 +164,17 @@ const reducer = (state = initialState, action) => {
         pieces: updatePiecesArray 
       }
 
+    // Set appropriate piece property active to false
+    case 'REMOVE_PIECE':
+      const removalPiece = action.payload.piece;
+      const updatedPiecesWithRemoval = state.pieces.map(piece => {
+        if (removalPiece.data.x === piece.currentRow && removalPiece.data.y === piece.currentColumn) {
+          piece = { ...piece, active: false }
+        }
+        return piece;
+      })
+      return { ...state, pieces: updatedPiecesWithRemoval }
+
     case 'KING':
       const kingPiece = state.pieces.find(piece => {
         return piece.id === action.payload.id;
@@ -185,6 +203,7 @@ const reducer = (state = initialState, action) => {
         board: clearedBoard
       }
     
+    // Update squares with available moves for currently selected piece
     case 'UPDATE_SQUARE':
       let updatedSquares = []
       action.payload.availableMoves.forEach((move) => {
