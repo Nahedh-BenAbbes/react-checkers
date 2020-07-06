@@ -89,12 +89,12 @@ class Board extends Component {
             } else if (hasPiece && newMove.data.pieceColor !== color) {
                 // Find the next possible square here
                 console.log('New move is blocked by opposite color');
-                if (newMove.data.pieceColor === 'red' && (newMove.data.y === 7 || newMove.data.y === 0)) {
+                if (newMove.data.y === 7 || newMove.data.y === 0) {
                     console.log('New move is on edge of board');
                     updatedMoves.push(newMove);
                 } else {
                     console.log('Finding new move...');
-                    let updatedMove = this.updateMove(newMove, move.y);
+                    let updatedMove = this.updateMove(newMove, move.y, color);
                     let updatedHasPiece = this.validateSquare(updatedMove);
                     if (!updatedHasPiece) {
                         updatedMove.data.available = true;
@@ -120,16 +120,16 @@ class Board extends Component {
     }
 
     // Update the move to add or subtract rows/columns depending on piece position and color
-    updateMove = (move, origPosition) => {
+    updateMove = (move, origPosition, color) => {
         let newMove = {}
         console.log(`Before updating move: ${JSON.stringify(move)}`);
-        if (move.data.pieceColor === 'red') {
+        if (color === 'red') {
             if (move.data.y < origPosition) {
                 newMove = { id: move.id - 1, data: { x: move.data.x - 1, y: move.data.y - 1, available: true } }
             } else {
                 newMove = { id: move.id + 1, data: { x: move.data.x - 1, y: move.data.y + 1, available: true } }
             }
-        } else if (move.data.pieceColor === 'black') {
+        } else if (color === 'black') {
             if (move.y < origPosition) {
                 newMove = { id: move.id - 1, data: { x: move.data.x + 1, y: move.data.y - 1, available: true } }
             } else {
