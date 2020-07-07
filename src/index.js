@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './components/Board';
+import Title from './components/Title';
+import Footer from './components/Footer';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -246,7 +248,9 @@ const store = createStore(reducer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <Title />
       <Board />
+      <Footer />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
