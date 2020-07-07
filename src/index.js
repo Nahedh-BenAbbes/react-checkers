@@ -7,6 +7,10 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 const initialState = {
+  players: [
+    { color: 'red', name: 'Peter Gibbons', winner: false, numPieces: 16, currentTurn: true },
+    { color: 'black', name: 'Bill Lumberg', winner: false, numPieces: 16, currentTurn: false }
+  ],
   board: [
       [
         { id: 0, data: { x: 0, y: 0, available: false, hasPiece: false, pieceColor: null } }, 
@@ -130,6 +134,7 @@ const reducer = (state = initialState, action) => {
     // Store potentail pieces for removal
     case 'UPDATE_PENDING_REMOVAL':
       const newPendingRemoval = action.payload.pieces
+      console.log(`Piece Removal Payload: ${JSON.stringify(action.payload.pieces)}`)
       return { ...state, pendingRemoval: newPendingRemoval }
 
     // Move piece to new row and column
@@ -170,6 +175,7 @@ const reducer = (state = initialState, action) => {
       const updatedPiecesWithRemoval = state.pieces.map(piece => {
         if (removalPiece.data.x === piece.currentRow && removalPiece.data.y === piece.currentColumn) {
           piece = { ...piece, active: false }
+          console.log(`Remove Piece: ${JSON.stringify(piece)}`)
         }
         return piece;
       })
@@ -243,7 +249,7 @@ ReactDOM.render(
       <Board />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('board')
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

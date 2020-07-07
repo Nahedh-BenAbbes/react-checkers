@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import './Piece.css';
-// import Draggable from 'react-draggable';
 
 class Piece extends Component {
     constructor(props) {
@@ -26,11 +25,6 @@ class Piece extends Component {
             active: this.props.active,
             isKing: this.props.isKing
         })
-    }
-
-    // Remove game piece when overtaken
-    removePiece = () => {
-        return
     }
 
     render = () => {

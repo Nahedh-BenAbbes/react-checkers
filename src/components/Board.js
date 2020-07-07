@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import './Board.css';
 import Piece from './Piece';
+import PlayerRed from './PlayerRed';
+import PlayerBlack from './PlayerBlack';
 import { connect } from 'react-redux';
 
 
@@ -10,10 +12,12 @@ class Board extends Component {
 
     // Move selected piece to the selected div
     movePiece = (piece, square) => {
+        console.log(`Pieces Pending removal: ${JSON.stringify(this.props.state.pendingRemoval)}`);
         console.log(`movePiece() args:\n\tpiece: ${JSON.stringify(piece)}\n\tsquare: ${JSON.stringify(square)}`)
-        if (this.props.state.pendingRemoval.length > 0) { // Check if there is a jumped piece
+        if (this.props.state.pendingRemoval) { // Check if there is a jumped piece
             this.props.state.pendingRemoval.forEach(rem => {
-                if ((piece.currentColumn + square.data.y) / 2 === rem.currentColumn) {
+                console.log(`piece.currentColumn: ${piece.currentColumn}, square.data.y: ${square.data.y}\nAverage: ${(piece.currentColumn + square.data.y) / 2}`)
+                if ((piece.currentColumn + square.data.y) / 2 === rem.data.y) {
                     this.removePiece(rem)
                 }
             })
@@ -114,6 +118,7 @@ class Board extends Component {
                     let updatedMove = this.updateMove(newMove, move.y, color);
                     let updatedHasPiece = this.validateSquare(updatedMove);
                     if (!updatedHasPiece) {
+                        console.log(`Blocked move: ${JSON.stringify(newMove)}`)
                         pendingRemoval.push(newMove);
                         updatedMove.data.available = true;
                         updatedMoves.push(updatedMove);
@@ -124,7 +129,9 @@ class Board extends Component {
                 updatedMoves.push(newMove);
             }
         })
-        this.updatePendingRemoval(pendingRemoval);
+        console.log(`pendingRemoval array: ${JSON.stringify(pendingRemoval)}`);
+        this.props.updatePendingRemoval(pendingRemoval);
+        // console.log(`Pieces Pending removal: ${this.props.state.pendingRemoval}`);
         return updatedMoves; 
     }
 
@@ -189,7 +196,7 @@ class Board extends Component {
                         }
                         // Set up conditional statements for mounting the Piece component
                         for (let i = 0; i < this.props.state.pieces.length; i++) {
-                            if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn) {
+                            if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn && this.props.state.pieces[i].active === true) {
                                 return (
                                     <div id={rowColumn} className={ifAvailable}>
                                         <div onClick={() => this.getAvailableMove(x, y, this.props.state.pieces[i].color)}>
@@ -222,12 +229,24 @@ class Board extends Component {
             )
         })
         return (
-            <div className="Board container">
+            <div id="board">
+                <div className="Board container">
                 {newBoard}
-                <div id="test-buttons">
-                    <div type="button" className="btn btn-secondary">Remove Piece</div>
                 </div>
+                <PlayerRed 
+                    name={this.props.state.players[0].name} 
+                    winner={this.props.state.players[0].winner} 
+                    numPieces={this.props.state.players[0].numPieces}
+                    currentTurn={this.props.state.players[0].currentTurn} 
+                />
+                <PlayerBlack 
+                    name={this.props.state.players[1].name} 
+                    winner={this.props.state.players[1].winner} 
+                    numPieces={this.props.state.players[1].numPieces}
+                    currentTurn={this.props.state.players[1].currentTurn} 
+                />
             </div>
+            
         )
     }
 }
@@ -247,7 +266,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece }});
         },
         updatePendingRemoval: (pieces) => {
-            dispatch({ type: 'UPDATE_PENDING_REMOVAL', payload: pieces });
+            dispatch({ type: 'UPDATE_PENDING_REMOVAL', payload: { pieces: pieces } });
         },
         removePiece: (piece) => {
             dispatch({ type: 'REMOVE_PIECE', payload: { piece } });
