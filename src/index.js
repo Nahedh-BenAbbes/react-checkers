@@ -171,7 +171,7 @@ const reducer = (state = initialState, action) => {
         pieces: updatePiecesArray 
       }
 
-    // Update who's turn it is
+    // Set current turn to the next player
     case 'SET_TURN':
       const newPlayerTurns = state.players.map(player => {
         if (player.currentTurn === true) {
@@ -182,7 +182,7 @@ const reducer = (state = initialState, action) => {
       })
       return { ...state, players: newPlayerTurns }
 
-    // Set appropriate piece property active to false and appropriate board object available to true, hasPiece to false
+    // Remove a piece from the board by setting appropriate piece property active to false and appropriate board object available to true, hasPiece to false
     case 'REMOVE_PIECE':
       const removalPiece = action.payload.piece;
       const updatedPiecesWithRemoval = state.pieces.map(piece => {
@@ -203,6 +203,7 @@ const reducer = (state = initialState, action) => {
       })
       return { ...state, board: updatedBoardWithRemoval, pieces: updatedPiecesWithRemoval }
 
+    // Set a piece to king
     case 'KING':
       const kingPiece = state.pieces.find(piece => {
         return piece.id === action.payload.id;
@@ -218,6 +219,7 @@ const reducer = (state = initialState, action) => {
         pieces: withKingPiecesArray
       }
 
+    // When a new piece is clicked, clear previous available divs
     case 'CLEAR_AVAILABLE_MOVES':
       const clearedBoard = state.board.map((row, x) => {
         const newRow = state.board[x].map(square => {

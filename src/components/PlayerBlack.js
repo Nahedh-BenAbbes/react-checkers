@@ -1,3 +1,5 @@
+// Class for the Player controlling the black pieces
+
 import React, { Component } from 'react'
 import './Player.css'
 

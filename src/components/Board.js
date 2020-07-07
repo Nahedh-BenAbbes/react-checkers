@@ -1,4 +1,4 @@
-// Board class that renders 8 instances of the Row class
+// Board class that renders the game board based on redux store
 
 import React, { Component } from 'react';
 import './Board.css';
@@ -14,7 +14,7 @@ class Board extends Component {
     movePiece = (piece, square) => {
         console.log(`Pieces Pending removal: ${JSON.stringify(this.props.state.pendingRemoval)}`);
         console.log(`movePiece() args:\n\tpiece: ${JSON.stringify(piece)}\n\tsquare: ${JSON.stringify(square)}`)
-        if (this.props.state.pendingRemoval) { // Check if there is a jumped piece
+        if (this.props.state.pendingRemoval) { // Check if there is a jumped piece and remove if so
             this.props.state.pendingRemoval.forEach(rem => {
                 console.log(`piece.currentColumn: ${piece.currentColumn}, square.data.y: ${square.data.y}\nAverage: ${(piece.currentColumn + square.data.y) / 2}`)
                 if ((piece.currentColumn + square.data.y) / 2 === rem.data.y) {
@@ -27,6 +27,7 @@ class Board extends Component {
         this.props.clearAvailableMoves();
     }
 
+    // Get the current turn's player
     getCurrentPlayer = (color) => {
         const currentPlayer = this.props.state.players.find(player => {
             return player.color === color;
@@ -35,27 +36,32 @@ class Board extends Component {
         return currentPlayer.currentTurn;
     }
 
+    // Update the current turn's player
     setTurn = () => {
         this.props.setTurn();
     }
 
+    // Send clicked piece to state
     updatePendingMove = (piece) => {
         this.props.updatePendingMove(piece);
     }
 
+    // Send pieces that could be jumped to state
     updatePendingRemoval = (pieces) => {
         this.props.updatePendingRemoval(pieces);
     }
 
+    // Remove the piece from the board
     removePiece = (piece) => {
         this.props.removePiece(piece);
     }
 
+    // King the selected piece
     king = () => {
         this.props.king();
     }
 
-    // Update board state with available moves for currently selected piece
+    // Get all available moves for the selected piece
     getAvailableMove = (x, y, color) => {
         this.props.clearAvailableMoves();
         const selectedPiece = this.props.state.pieces.find(piece => {
@@ -124,8 +130,7 @@ class Board extends Component {
             let hasPiece = this.validateSquare(newMove);
             if (hasPiece && newMove.data.pieceColor === color) {
                 updatedMoves.push(newMove);
-            } else if (hasPiece && newMove.data.pieceColor !== color) {
-                // Find the next possible square here
+            } else if (hasPiece && newMove.data.pieceColor !== color) { // Check if there is an opposite piece in the next square
                 console.log('New move is blocked by opposite color');
                 if (newMove.data.y === 7 || newMove.data.y === 0) {
                     console.log('New move is on edge of board');
@@ -149,7 +154,6 @@ class Board extends Component {
         })
         console.log(`pendingRemoval array: ${JSON.stringify(pendingRemoval)}`);
         this.props.updatePendingRemoval(pendingRemoval);
-        // console.log(`Pieces Pending removal: ${this.props.state.pendingRemoval}`);
         return updatedMoves; 
     }
 
@@ -163,7 +167,7 @@ class Board extends Component {
         return checkedSquare.data.hasPiece;
     }
 
-    // Update the move to add or subtract rows/columns depending on piece position and color
+    // If opposite piece was blocking original move, update the move to add or subtract rows/columns depending on piece position and color
     updateMove = (move, origPosition, color) => {
         let newMove = {}
         console.log(`updateMove(): original move: ${JSON.stringify(move)}\nOriginal Position: ${origPosition}`);
@@ -187,16 +191,19 @@ class Board extends Component {
         return newMove;
     }
 
+    // Update all divs available to the selected piece
     updateSquare = (availableMoves) => {
         this.props.updateSquare(availableMoves);
     }
 
+    // Clear previous available moves
     clearAvailableMoves = () => {
         this.props.clearAvailableMoves();
     }
 
     render = () => {
 
+        // Iterate over the state board array
         let newBoard = this.props.state.board.map((row, x) => {
             let evenOdd = '';
             if ((x + 1) % 2 === 0) {
@@ -207,7 +214,7 @@ class Board extends Component {
 
             return (
                 <div key={x} className={evenOdd}>
-                    {row.map((col, y) => {
+                    {row.map((col, y) => { // Then iterate over each array in the state board array
                         const rowColumn = `${x}${y}`
                         let ifAvailable = 'col';
                         if (this.props.state.board[x][y].data.available) {
