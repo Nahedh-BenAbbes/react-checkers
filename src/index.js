@@ -171,7 +171,7 @@ const reducer = (state = initialState, action) => {
         pieces: updatePiecesArray 
       }
 
-    // Set appropriate piece property active to false
+    // Set appropriate piece property active to false and appropriate board object available to true, hasPiece to false
     case 'REMOVE_PIECE':
       const removalPiece = action.payload.piece;
       const updatedPiecesWithRemoval = state.pieces.map(piece => {
@@ -181,7 +181,16 @@ const reducer = (state = initialState, action) => {
         }
         return piece;
       })
-      return { ...state, pieces: updatedPiecesWithRemoval }
+      const updatedBoardWithRemoval = state.board.map((row, x) => {
+        const newRow = row.map((col, y) => {
+          if (removalPiece.data.x === x && removalPiece.data.y === y) {
+            col = { id: col.id, data: { ...col.data, available: false, hasPiece: false, pieceColor: null } }
+          }
+          return col;
+        })
+        return newRow;
+      })
+      return { ...state, board: updatedBoardWithRemoval, pieces: updatedPiecesWithRemoval }
 
     case 'KING':
       const kingPiece = state.pieces.find(piece => {

@@ -47,10 +47,12 @@ class Board extends Component {
         this.props.clearAvailableMoves();
         const selectedPiece = this.props.state.pieces.find(piece => {
             if (piece.currentRow === x && piece.currentColumn === y) {
+                console.log(`getAvailableMoves() Selected piece: ${JSON.stringify(piece)}`)
                 return piece;
             }
         })
-        this.updatePendingMove(selectedPiece);
+        this.props.updatePendingMove(selectedPiece);
+        
         let availableMoves = []
         console.log(`X: ${x}\nY: ${y}\nColor: ${color}`);
         if (color === 'red') {
@@ -65,9 +67,9 @@ class Board extends Component {
                     availableMoves.push({ id: y + 1, x: x - 1, y: y + 1, available: true });
                     availableMoves.push({ id: y - 1, x: x - 1, y: y - 1, available: true });
             }
-            console.log(`Before validating: ${JSON.stringify(availableMoves)}`);
+            console.log(`getAvailableMoves() Moves before validating: ${JSON.stringify(availableMoves)}`);
             availableMoves = this.validateMoves(availableMoves, color);
-            console.log(`After validating: ${JSON.stringify(availableMoves)}`);
+            console.log(`getAvailableMoves() Moves after validating: ${JSON.stringify(availableMoves)}`);
             if (availableMoves == null) {
                 return;
             }
@@ -84,9 +86,9 @@ class Board extends Component {
                     availableMoves.push({ id: y + 1, x: x + 1, y: y + 1, available: true });
                     availableMoves.push({ id: y - 1, x: x + 1, y: y - 1, available: true });
             }
-            console.log(`Before validating: ${JSON.stringify(availableMoves)}`);
+            console.log(`getAvailableMoves() Moves before validating: ${JSON.stringify(availableMoves)}`);
             availableMoves = this.validateMoves(availableMoves, color);
-            console.log(`After validating: ${JSON.stringify(availableMoves)}`);
+            console.log(`getAvailableMoves() Moves after validating: ${JSON.stringify(availableMoves)}`);
             if (availableMoves == null) {
                 return;
             }
@@ -99,11 +101,13 @@ class Board extends Component {
         let updatedMoves = []
         let pendingRemoval = []
         moves.forEach((move, i) => {
+            console.log(`Board row: ${this.props.state.board[move.x]}`)
             let newMove = this.props.state.board[move.x].find(square => {
-                return square.id === move.y;
+                console.log(`Square data: ${JSON.stringify(square)}\nMove data: ${JSON.stringify(move)}`)
+                return square.data.y === move.y;
             })
             console.log(`New Move: ${JSON.stringify(newMove)}`)
-            console.log(`hasPiece: ${this.validateSquare(newMove)}`)
+            
             let hasPiece = this.validateSquare(newMove);
             if (hasPiece && newMove.data.pieceColor === color) {
                 updatedMoves.push(newMove);
@@ -115,6 +119,7 @@ class Board extends Component {
                     updatedMoves.push(newMove);
                 } else {
                     console.log('Finding new move...');
+                    console.log(`validateMoves() Current pending move: ${JSON.stringify(this.props.state.pendingMove)}`)
                     let updatedMove = this.updateMove(newMove, move.y, color);
                     let updatedHasPiece = this.validateSquare(updatedMove);
                     if (!updatedHasPiece) {
@@ -137,7 +142,7 @@ class Board extends Component {
 
     // Check board state on individual div objects to see if it has a piece
     validateSquare = (square) => {
-        console.log(`validateSquare() square object: ${JSON.stringify(square)}`)
+        console.log(`validateSquare() checking square object: ${JSON.stringify(square)}`)
         const checkedSquare = this.props.state.board[square.data.x].find(sqr => {
             return sqr.id === square.data.y;
         })
@@ -148,23 +153,24 @@ class Board extends Component {
     // Update the move to add or subtract rows/columns depending on piece position and color
     updateMove = (move, origPosition, color) => {
         let newMove = {}
-        console.log(`Before updating move: ${JSON.stringify(move)}`);
+        console.log(`updateMove(): original move: ${JSON.stringify(move)}\nOriginal Position: ${origPosition}`);
         if (color === 'red') {
             if (move.data.y < origPosition) {
-                newMove = { id: move.id - 1, data: { x: move.data.x - 1, y: move.data.y - 1, available: true } }
+                newMove = { id: move.id - 1, data: { x: move.data.x - 1, y: move.data.y - 1, available: true, hasPiece: false, pieceColor: null } }
             } else {
-                newMove = { id: move.id + 1, data: { x: move.data.x - 1, y: move.data.y + 1, available: true } }
+                newMove = { id: move.id + 1, data: { x: move.data.x - 1, y: move.data.y + 1, available: true, hasPiece: false, pieceColor: null } }
             }
         } else if (color === 'black') {
             if (move.y < origPosition) {
-                newMove = { id: move.id - 1, data: { x: move.data.x + 1, y: move.data.y - 1, available: true } }
+                newMove = { id: move.id - 1, data: { x: move.data.x + 1, y: move.data.y - 1, available: true, hasPiece: false, pieceColor: null } }
             } else {
-                newMove = { id: move.id + 1, data: { x: move.data.x + 1, y: move.data.y + 1, available: true } }
+                newMove = { id: move.id + 1, data: { x: move.data.x + 1, y: move.data.y + 1, available: true, hasPiece: false, pieceColor: null } }
             }
         } else {
             newMove = move;
         }
 
+        console.log(`updateMove(): updated move: ${JSON.stringify(newMove)}`)
         return newMove;
     }
 
@@ -263,13 +269,13 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({ type: 'MOVE_PIECE' , payload: { piece: piece, square: square }});
         },
         updatePendingMove: (piece) => {
-            dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece }});
+            dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece: piece }});
         },
         updatePendingRemoval: (pieces) => {
             dispatch({ type: 'UPDATE_PENDING_REMOVAL', payload: { pieces: pieces } });
         },
         removePiece: (piece) => {
-            dispatch({ type: 'REMOVE_PIECE', payload: { piece } });
+            dispatch({ type: 'REMOVE_PIECE', payload: { piece: piece } });
         },
         king: () => {
             dispatch({ type: 'KING' });
