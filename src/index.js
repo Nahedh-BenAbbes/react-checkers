@@ -171,6 +171,17 @@ const reducer = (state = initialState, action) => {
         pieces: updatePiecesArray 
       }
 
+    // Update who's turn it is
+    case 'SET_TURN':
+      const newPlayerTurns = state.players.map(player => {
+        if (player.currentTurn === true) {
+          return { ...player, currentTurn: false }
+        } else {
+          return { ...player, currentTurn: true }
+        }
+      })
+      return { ...state, players: newPlayerTurns }
+
     // Set appropriate piece property active to false and appropriate board object available to true, hasPiece to false
     case 'REMOVE_PIECE':
       const removalPiece = action.payload.piece;

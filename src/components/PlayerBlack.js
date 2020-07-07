@@ -5,10 +5,10 @@ class PlayerBlack extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
-            winner: null,
-            numPieces: null,
-            currentTurn: null
+            name: this.props.name,
+            winner: this.props.winner,
+            numPieces: this.props.numPieces,
+            currentTurn: this.props.currentTurn
         }
     }
 
@@ -22,7 +22,7 @@ class PlayerBlack extends Component {
     }
 
     render = () => {
-        let turnBadge = this.state.currentTurn ? <h4><span className="badge badge-success">Your Move</span></h4> : <h4><span className="badge badge-danger">Sit Tight</span></h4>;
+        let turnBadge = this.props.currentTurn ? <h4><span className="badge badge-success">Your Move</span></h4> : <h4><span className="badge badge-danger">Sit Tight</span></h4>;
         return (
             <div>
                 <div className="card player-two">

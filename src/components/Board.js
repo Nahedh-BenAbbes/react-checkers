@@ -22,8 +22,21 @@ class Board extends Component {
                 }
             })
         }
+        this.props.setTurn();
         this.props.movePiece(piece, square);
         this.props.clearAvailableMoves();
+    }
+
+    getCurrentPlayer = (color) => {
+        const currentPlayer = this.props.state.players.find(player => {
+            return player.color === color;
+        })
+
+        return currentPlayer.currentTurn;
+    }
+
+    setTurn = () => {
+        this.props.setTurn();
     }
 
     updatePendingMove = (piece) => {
@@ -205,7 +218,10 @@ class Board extends Component {
                             if (x === this.props.state.pieces[i].currentRow && y === this.props.state.pieces[i].currentColumn && this.props.state.pieces[i].active === true) {
                                 return (
                                     <div id={rowColumn} className={ifAvailable}>
-                                        <div onClick={() => this.getAvailableMove(x, y, this.props.state.pieces[i].color)}>
+                                        <div onClick={e => {
+                                                        this.getCurrentPlayer(this.props.state.pieces[i].color) ?
+                                                        this.getAvailableMove(x, y, this.props.state.pieces[i].color) :
+                                                        alert('Quit cheating, it isn\'t your turn...')}}>
                                             <Piece 
                                                 id={this.props.state.pieces[i].id} 
                                                 color={this.props.state.pieces[i].color} 
@@ -267,6 +283,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         movePiece: (piece, square) => {
             dispatch({ type: 'MOVE_PIECE' , payload: { piece: piece, square: square }});
+        },
+        setTurn: () => {
+            dispatch({ type: 'SET_TURN' });
         },
         updatePendingMove: (piece) => {
             dispatch({ type: 'UPDATE_PENDING_MOVE', payload: { piece: piece }});
