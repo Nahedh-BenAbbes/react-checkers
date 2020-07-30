@@ -8,6 +8,7 @@ A client-side Checkers board game featuring React and Redux.
     * What I Used
     * Challenges
     * Stretch Goals
+    * Current Work In Progress
     * Code Snippets
 
 ##Description
@@ -48,6 +49,10 @@ This is a project I am particularly invested in, so these may have been stretch 
     * Server side API for storing user info
     * SocketIO for online play
     * Eventually adapt into Chess
+
+##Curren Work In Progress
+---
+I am currently working on reorganizing the Redux state by splitting it up into multiple slices and reducers. This will result in a much more manageable code base for both expansion and debugging.
 
 ##Code Snippets
 ---
